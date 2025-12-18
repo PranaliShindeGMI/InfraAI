@@ -11,7 +11,7 @@ def preprocess_vm_data(df: pd.DataFrame, save_to_file: bool = True, output_filen
     - Handle missing values
     - Convert scientific notation
     - Create derived features
-    - Aggregate by date
+    - Aggregate by date AND instance_id (keep instances separate)
     - Optionally save to processed folder
     
     Args:
@@ -20,7 +20,7 @@ def preprocess_vm_data(df: pd.DataFrame, save_to_file: bool = True, output_filen
         output_filename: Name of the output CSV file (default: 'processed_vm_data.csv')
     
     Returns:
-        Processed DataFrame
+        Processed DataFrame with each instance kept separate
     """
     # Create a copy to avoid modifying original
     df = df.copy()
@@ -45,11 +45,14 @@ def preprocess_vm_data(df: pd.DataFrame, save_to_file: bool = True, output_filen
     # Extract zone from resource_global_name
     df['zone'] = df['resource_global_name'].str.extract(r'/zones/([^/]+)/')
     
+    # Extract project from resource_global_name
+    df['project_id'] = df['resource_global_name'].str.extract(r'/projects/([^/]+)/')
+    
     # Categorize SKU types
     df['sku_category'] = df['sku_description'].apply(categorize_sku)
     
-    # Group and aggregate by date
-    daily = df.groupby('date').agg({
+    # Group and aggregate by date AND instance_id to keep instances separate
+    daily = df.groupby(['date', 'instance_id', 'project_id', 'zone'], dropna=False).agg({
         'cpu_utilization': ['mean', 'std', 'min', 'max'],
         'memory_used_gb': ['mean', 'std', 'min', 'max'],
         'disk_read_bytes': ['sum', 'mean'],
@@ -61,7 +64,7 @@ def preprocess_vm_data(df: pd.DataFrame, save_to_file: bool = True, output_filen
         'uptime_fraction': ['mean', 'min', 'max'],
         'cost_usd': ['sum', 'mean', 'max'],
         'cost_per_cpu': 'mean',
-        'instance_id': 'nunique'  # Count unique instances per day
+        'sku_category': lambda x: x.mode()[0] if len(x.mode()) > 0 else x.iloc[0]  # Most common SKU category
     }).reset_index()
     
     # Flatten column names
@@ -69,6 +72,9 @@ def preprocess_vm_data(df: pd.DataFrame, save_to_file: bool = True, output_filen
     
     # Convert date column to string for JSON serialization
     daily['date'] = daily['date'].astype(str)
+    
+    # Sort by date and instance_id for better readability
+    daily = daily.sort_values(['date', 'instance_id']).reset_index(drop=True)
     
     # Save to processed folder if requested
     if save_to_file:
