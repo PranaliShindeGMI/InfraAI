@@ -10,6 +10,7 @@ load_dotenv()
 
 # Configure Google AI
 GOOGLE_API_KEY = os.getenv('GOOGLE_AI_API_KEY')
+print(f"GOOGLE_API_KEY found: {GOOGLE_API_KEY is not None}")
 if GOOGLE_API_KEY:
     genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -46,10 +47,13 @@ def generate_vm_recommendations(df):
     
     try:
         # First, analyze the data to get statistical insights
-        analysis_results = analyze_vm_data(df)
+        # analysis_results = analyze_vm_data(df)
+        analysis_file_path = "backend/data/analysis/vm_analysis_results.json"
+        with open(analysis_file_path, 'r') as f:
+            analysis_results = json.load(f)
         
         # Prepare a summary of the data for the AI model
-        data_summary = prepare_data_summary(df, analysis_results)
+        # data_summary = prepare_data_summary(df, analysis_results)
         
         # Load agent context
         agent_context = load_agent_context()
@@ -61,12 +65,12 @@ You are an expert cloud infrastructure analyst specializing in Google Cloud Plat
 Use the following context and best practices to guide your analysis:
 
 {agent_context}
-
+    
 ---
 
-Now analyze the following VM instance data and provide actionable insights and recommendations:
+Now analyze the following VM instance data analysis and provide actionable insights and recommendations:
 
-{data_summary}
+{analysis_results}
 
 Based on the context provided and the data above, please provide:
 1. Key Insights: 3-5 important observations about the current VM usage patterns
@@ -103,7 +107,6 @@ Format your response as JSON with this structure:
             "insights": ["Error occurred during analysis"],
             "recommendations": ["Please check API key and try again"]
         }
-
 
 def prepare_data_summary(df: pd.DataFrame, analysis_results: dict) -> str:
     """
