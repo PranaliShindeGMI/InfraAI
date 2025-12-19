@@ -1,17 +1,18 @@
 import os
 import json
-import google.generativeai as genai
+import asyncio
 from dotenv import load_dotenv
 import pandas as pd
+
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai import types
+
 from backend.analysis import analyze_vm_data
+from backend.vm_recommender.agent import root_agent as vm_recommender_agent
 
 # Load environment variables
 load_dotenv()
-
-# Configure Google AI
-GOOGLE_API_KEY = os.getenv('GOOGLE_AI_API_KEY')
-if GOOGLE_API_KEY:
-    genai.configure(api_key=GOOGLE_API_KEY)
 
 # Load agent context
 CONTEXT_FILE_PATH = os.path.join(os.path.dirname(__file__), 'agent_context.txt')
@@ -33,17 +34,8 @@ def load_agent_context() -> str:
 def generate_vm_recommendations(df):
     """
     Generate AI-powered recommendations based on VM data analysis
-    using Google's Gemini model
+    using the vm_recommender Agent
     """
-    
-    if not GOOGLE_API_KEY:
-        return {
-            "error": "GOOGLE_AI_API_KEY not found in environment variables",
-            "service": "Compute Engine",
-            "insights": [],
-            "recommendations": []
-        }
-    
     try:
         # First, analyze the data to get statistical insights
         analysis_results = analyze_vm_data(df)
@@ -51,44 +43,46 @@ def generate_vm_recommendations(df):
         # Prepare a summary of the data for the AI model
         data_summary = prepare_data_summary(df, analysis_results)
         
-        # Load agent context
-        agent_context = load_agent_context()
-        
-        # Create the prompt for Gemini
-        prompt = f"""
-You are an expert cloud infrastructure analyst specializing in Google Cloud Platform VM optimization.
+        # Call vm_recommender_agent via ADK Runner, similar to agent_run.py
+        async def _call_agent(summary: str) -> str:
+            session_service = InMemorySessionService()
+            await session_service.create_session(
+                app_name="vm_recommender_app",
+                user_id="backend_user",
+                session_id="vm_recommendations_session",
+                state={"data_summary": summary},
+            )
 
-Use the following context and best practices to guide your analysis:
+            runner = Runner(
+                agent=vm_recommender_agent,
+                app_name="vm_recommender_app",
+                session_service=session_service,
+            )
 
-{agent_context}
+            content = types.Content(role="user", parts=[types.Part(text=summary)])
 
----
+            final_text = None
+            async for event in runner.run_async(
+                user_id="backend_user",
+                session_id="vm_recommendations_session",
+                new_message=content,
+            ):
+                if event.is_final_response():
+                    parts = (
+                        event.content.parts
+                        if event.content and event.content.parts
+                        else []
+                    )
+                    final_text = "".join(p.text or "" for p in parts)
+                    break
 
-Now analyze the following VM instance data and provide actionable insights and recommendations:
+            return final_text or "{}"
 
-{data_summary}
+        # Run the async agent call synchronously
+        agent_response_text = asyncio.run(_call_agent(data_summary))
 
-Based on the context provided and the data above, please provide:
-1. Key Insights: 3-5 important observations about the current VM usage patterns
-2. Recommendations: 3-5 specific, actionable recommendations to optimize cost, performance, or reliability
-
-Make sure to reference specific metrics from the data and apply the best practices from the context.
-
-Format your response as JSON with this structure:
-{{
-    "insights": ["insight 1", "insight 2", ...],
-    "recommendations": ["recommendation 1", "recommendation 2", ...]
-}}
-"""
-        
-        # Initialize Gemini model
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
-        # Generate response
-        response = model.generate_content(prompt)
-        
-        # Parse the response
-        result = parse_gemini_response(response.text)
+        # Parse the response (expects the JSON structure defined in the agent)
+        result = parse_gemini_response(agent_response_text)
         
         # Add service information
         result['service'] = 'Compute Engine'
