@@ -7,3 +7,5 @@ pydantic==2.7.1
 requests==2.32.2
 python-dotenv==1.0.1
 google-generativeai
+prophet
+scikit-learn
