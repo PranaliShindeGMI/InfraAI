@@ -12,9 +12,9 @@ BACKEND_URL = "http://localhost:8000/vm/recommendations"
 
 try:
     alerts = requests.get(BACKEND_URL).json()
-    st.warning("Alerts: Fetched from backend.")
+    # st.warning("Alerts: Fetched from backend.")
 except:
-    st.warning("Alerts: Using mock data.")
+    # st.warning("Alerts: Using mock data.")
     alerts = alertMockData.alerts
     
 
