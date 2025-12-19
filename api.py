@@ -37,6 +37,8 @@ app = FastAPI(
 def vm_recommendations():
     try:
         df = load_vm_data()
+        df = preprocess_vm_data(df)
+        analysis_results = analyze_vm_data(df)
         output = generate_vm_recommendations(df)
         return JSONResponse(content=output)
     except Exception as e:
@@ -55,18 +57,18 @@ def vm_analysis():
     """
     try:
         df = load_vm_data()
+        df = preprocess_vm_data(df)
         analysis_results = analyze_vm_data(df)
         return JSONResponse(content=analysis_results)
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
 @app.get("/vm/preprocessed")
-def vm_preprocessed_data():
+def vm_preprocessed_data(df):
     """
     Get preprocessed and aggregated VM data
     """
     try:
-        df = load_vm_data()
         preprocessed = preprocess_vm_data(df)
         # Convert to dictionary for JSON response
         result = preprocessed.to_dict(orient='records')

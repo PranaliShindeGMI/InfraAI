@@ -3,8 +3,10 @@ import pandas as pd
 import numpy as np
 from typing import Dict, Any, List
 from backend.preprocessing import preprocess_vm_data
+import os
+import json
 
-def analyze_vm_data(df: pd.DataFrame) -> Dict[str, Any]:
+def analyze_vm_data(preprocessed_df: pd.DataFrame) -> Dict[str, Any]:
     """
     Perform comprehensive analysis on VM data including:
     - Overall statistics across all instances
@@ -16,7 +18,7 @@ def analyze_vm_data(df: pd.DataFrame) -> Dict[str, Any]:
     """
     
     # Preprocess data first (now keeps instances separate)
-    preprocessed_df = preprocess_vm_data(df, save_to_file=False)
+
     
     analysis_results = {}
     
@@ -43,7 +45,14 @@ def analyze_vm_data(df: pd.DataFrame) -> Dict[str, Any]:
     
     # 7. Anomaly Detection (per instance)
     analysis_results['anomalies'] = detect_anomalies(preprocessed_df)
+
     
+    
+    output_dir = "backend/data/analysis"
+    os.makedirs(output_dir, exist_ok=True)
+    file_path = os.path.join(output_dir, "vm_analysis_results.json")
+    with open(file_path, 'w') as f:
+        json.dump(analysis_results, f, indent=4)
     return analysis_results
 
 def get_instance_summary(df: pd.DataFrame) -> Dict[str, Any]:

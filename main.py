@@ -7,7 +7,7 @@ import json
 st.set_page_config(layout="wide")
 
 # ------- FETCH REAL DATA FROM BACKEND -------
-BACKEND_URL = "http://localhost:8000/recommendations"
+BACKEND_URL = "http://localhost:8000/vm/recommendations"
 
 try:
     alerts = requests.get(BACKEND_URL).json()

@@ -1,0 +1,1226 @@
+{
+    "instance_summary": {
+        "total_instances": 5,
+        "instance_ids": [
+            "5551001",
+            "5551002",
+            "5551003",
+            "5551004",
+            "5551005"
+        ],
+        "records_per_instance": {
+            "5551001": 365,
+            "5551002": 365,
+            "5551003": 365,
+            "5551004": 365,
+            "5551005": 365
+        },
+        "date_range": {
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "total_days": 365
+        }
+    },
+    "overall_stats": {
+        "cpu_utilization_mean": {
+            "mean": 0.06110738356164383,
+            "median": 0.06357449999999999,
+            "std": 0.023536540949118043,
+            "min": 0.0206245,
+            "max": 0.10432849999999999,
+            "q25": 0.03479,
+            "q75": 0.0812575
+        },
+        "cpu_utilization_std": {
+            "mean": 0.03766633992516483,
+            "median": 0.03691380240506253,
+            "std": 0.0274936190451204,
+            "min": 4.2426406871235285e-06,
+            "max": 0.09401691762656336,
+            "q25": 0.008858633754705067,
+            "q75": 0.06129130868646875
+        },
+        "cpu_utilization_min": {
+            "mean": 0.03447325917808219,
+            "median": 0.033743,
+            "std": 0.008160741162174768,
+            "min": 0.020028,
+            "max": 0.049978,
+            "q25": 0.027629,
+            "q75": 0.041417
+        },
+        "cpu_utilization_max": {
+            "mean": 0.08774150794520547,
+            "median": 0.089234,
+            "std": 0.042393854644054416,
+            "min": 0.021182,
+            "max": 0.159903,
+            "q25": 0.038597,
+            "q75": 0.125757
+        },
+        "memory_used_gb_mean": {
+            "mean": 10.769148293423326,
+            "median": 10.896474123001099,
+            "std": 0.9443472878759352,
+            "min": 8.810311555862427,
+            "max": 12.759119272232056,
+            "q25": 9.825453162193298,
+            "q75": 11.553056538105011
+        },
+        "memory_used_gb_std": {
+            "mean": 1.497147714068615,
+            "median": 1.4487979175619823,
+            "std": 1.071788802952419,
+            "min": 0.0,
+            "max": 4.162001290450785,
+            "q25": 0.4609811555879035,
+            "q75": 2.3707602287377894
+        },
+        "memory_used_gb_min": {
+            "mean": 9.71050499236747,
+            "median": 9.685754776000977,
+            "std": 0.4250422789748403,
+            "min": 8.717179298400879,
+            "max": 10.80334186553955,
+            "q25": 9.406358003616333,
+            "q75": 10.058283805847168
+        },
+        "memory_used_gb_max": {
+            "mean": 11.827791594479182,
+            "median": 11.920928955078125,
+            "std": 1.6588109896716148,
+            "min": 8.8568776845932,
+            "max": 15.087425708770752,
+            "q25": 10.058283805847168,
+            "q75": 13.317912817001343
+        },
+        "disk_read_bytes_sum": {
+            "mean": 66741.07616438356,
+            "median": 67950.0,
+            "std": 13177.702936360138,
+            "min": 35115.0,
+            "max": 95018.0,
+            "q25": 56530.0,
+            "q75": 77016.0
+        },
+        "disk_read_bytes_mean": {
+            "mean": 33370.53808219178,
+            "median": 33975.0,
+            "std": 6588.851468180069,
+            "min": 17557.5,
+            "max": 47509.0,
+            "q25": 28265.0,
+            "q75": 38508.0
+        },
+        "disk_write_bytes_sum": {
+            "mean": 204485.22904109588,
+            "median": 28573.0,
+            "std": 368647.46122921974,
+            "min": 14824.0,
+            "max": 1867098.0,
+            "q25": 24198.0,
+            "q75": 35145.0
+        },
+        "disk_write_bytes_mean": {
+            "mean": 102242.61452054794,
+            "median": 14286.5,
+            "std": 184323.73061460987,
+            "min": 7412.0,
+            "max": 933549.0,
+            "q25": 12099.0,
+            "q75": 17572.5
+        },
+        "ingress_bytes_sum": {
+            "mean": 7407.257855397261,
+            "median": 7456.132,
+            "std": 2336.68555536069,
+            "min": 1741.4117999999999,
+            "max": 12935.443,
+            "q25": 5728.942,
+            "q75": 9044.104
+        },
+        "ingress_bytes_mean": {
+            "mean": 3703.6289276986304,
+            "median": 3728.066,
+            "std": 1168.342777680345,
+            "min": 870.7058999999999,
+            "max": 6467.7215,
+            "q25": 2864.471,
+            "q75": 4522.052
+        },
+        "egress_bytes_sum": {
+            "mean": 2071.347004931507,
+            "median": 2057.2884,
+            "std": 1199.6183220184419,
+            "min": 0.056600000000000004,
+            "max": 5053.628,
+            "q25": 1182.3282,
+            "q75": 2887.9831
+        },
+        "egress_bytes_mean": {
+            "mean": 1035.6735024657535,
+            "median": 1028.6442,
+            "std": 599.8091610092209,
+            "min": 0.028300000000000002,
+            "max": 2526.814,
+            "q25": 591.1641,
+            "q75": 1443.99155
+        },
+        "network_total_bytes_sum": {
+            "mean": 9478.604860328767,
+            "median": 9414.9671,
+            "std": 2616.58052163628,
+            "min": 2524.5759,
+            "max": 16806.608,
+            "q25": 7598.2015,
+            "q75": 11331.7818
+        },
+        "network_total_bytes_mean": {
+            "mean": 4739.302430164384,
+            "median": 4707.48355,
+            "std": 1308.29026081814,
+            "min": 1262.28795,
+            "max": 8403.304,
+            "q25": 3799.10075,
+            "q75": 5665.8909
+        },
+        "disk_total_bytes_sum": {
+            "mean": 271226.30520547944,
+            "median": 99588.0,
+            "std": 368325.1413426808,
+            "min": 56972.0,
+            "max": 1940839.0,
+            "q25": 85896.0,
+            "q75": 114805.0
+        },
+        "disk_total_bytes_mean": {
+            "mean": 135613.15260273972,
+            "median": 49794.0,
+            "std": 184162.5706713404,
+            "min": 28486.0,
+            "max": 970419.5,
+            "q25": 42948.0,
+            "q75": 57402.5
+        },
+        "uptime_fraction_mean": {
+            "mean": 0.4074774353424658,
+            "median": 0.40801699999999996,
+            "std": 0.09921778300136971,
+            "min": 0.175904,
+            "max": 0.6442975,
+            "q25": 0.3366805,
+            "q75": 0.4766325
+        },
+        "uptime_fraction_min": {
+            "mean": 0.32817835780821913,
+            "median": 0.309102,
+            "std": 0.11271347521154647,
+            "min": 0.170126,
+            "max": 0.639063,
+            "q25": 0.232704,
+            "q75": 0.401255
+        },
+        "uptime_fraction_max": {
+            "mean": 0.4867765128767123,
+            "median": 0.508946,
+            "std": 0.11597481648329694,
+            "min": 0.176927,
+            "max": 0.649957,
+            "q25": 0.403914,
+            "q75": 0.58462
+        },
+        "cost_usd_sum": {
+            "mean": 0.3915485068493151,
+            "median": 0.302183,
+            "std": 0.22723908665057946,
+            "min": 0.027389999999999998,
+            "max": 0.74723,
+            "q25": 0.16892700000000002,
+            "q75": 0.609786
+        },
+        "cost_usd_mean": {
+            "mean": 0.19577425342465754,
+            "median": 0.1510915,
+            "std": 0.11361954332528973,
+            "min": 0.013694999999999999,
+            "max": 0.373615,
+            "q25": 0.08446350000000001,
+            "q75": 0.304893
+        },
+        "cost_usd_max": {
+            "mean": 0.3122123923287672,
+            "median": 0.167397,
+            "std": 0.19175368051176675,
+            "min": 0.01739,
+            "max": 0.549993,
+            "q25": 0.135582,
+            "q75": 0.501014
+        },
+        "cost_per_cpu_mean": {
+            "mean": 4.293816503506398,
+            "median": 2.940292654066767,
+            "std": 3.254440171587041,
+            "min": 0.18415036305582927,
+            "max": 15.152345828053555,
+            "q25": 2.0538247223490136,
+            "q75": 6.288251537582435
+        }
+    },
+    "per_instance_analysis": {
+        "5551001": {
+            "total_records": 365,
+            "date_range": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+            },
+            "avg_cpu_utilization": 0.06100973424657535,
+            "avg_memory_gb": 10.767862302799747,
+            "total_cost": 140.534953,
+            "avg_daily_cost": 0.38502726849315067,
+            "avg_uptime_fraction": 0.40756271780821907,
+            "total_network_gb": 0.0031804795302450657,
+            "zone": "us-central1-a",
+            "project_id": "analytic-pocs-dev-c50df1"
+        },
+        "5551002": {
+            "total_records": 365,
+            "date_range": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+            },
+            "avg_cpu_utilization": 0.06085492876712329,
+            "avg_memory_gb": 10.771128310732646,
+            "total_cost": 145.27929799999998,
+            "avg_daily_cost": 0.3980254739726027,
+            "avg_uptime_fraction": 0.417535195890411,
+            "total_network_gb": 0.0032395562059246005,
+            "zone": "us-central1-a",
+            "project_id": "analytic-pocs-dev-c50df1"
+        },
+        "5551003": {
+            "total_records": 365,
+            "date_range": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+            },
+            "avg_cpu_utilization": 0.06107196438356165,
+            "avg_memory_gb": 10.760386206515848,
+            "total_cost": 141.26092699999998,
+            "avg_daily_cost": 0.38701623835616433,
+            "avg_uptime_fraction": 0.3951669424657534,
+            "total_network_gb": 0.003253423213027418,
+            "zone": "us-central1-a",
+            "project_id": "analytic-pocs-dev-c50df1"
+        },
+        "5551004": {
+            "total_records": 365,
+            "date_range": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+            },
+            "avg_cpu_utilization": 0.061631582191780825,
+            "avg_memory_gb": 10.79973139583248,
+            "total_cost": 146.679349,
+            "avg_daily_cost": 0.4018612301369863,
+            "avg_uptime_fraction": 0.3986720479452055,
+            "total_network_gb": 0.003231336858961731,
+            "zone": "us-central1-a",
+            "project_id": "analytic-pocs-dev-c50df1"
+        },
+        "5551005": {
+            "total_records": 365,
+            "date_range": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+            },
+            "avg_cpu_utilization": 0.06096870821917808,
+            "avg_memory_gb": 10.74663325123591,
+            "total_cost": 140.82149800000002,
+            "avg_daily_cost": 0.3858123232876713,
+            "avg_uptime_fraction": 0.41845027260273976,
+            "total_network_gb": 0.0032056447870098055,
+            "zone": "us-central1-a",
+            "project_id": "analytic-pocs-dev-c50df1"
+        }
+    },
+    "correlation_analysis": {
+        "correlation_matrix": {
+            "cpu_utilization_mean": {
+                "cpu_utilization_mean": 1.0,
+                "memory_used_gb_mean": 0.9793777763950395,
+                "disk_read_bytes_sum": 0.6277702235054057,
+                "disk_write_bytes_sum": -0.04432971475805488,
+                "ingress_bytes_sum": 0.008539013574975916,
+                "egress_bytes_sum": 0.0061622805759121504,
+                "network_total_bytes_sum": 0.010450805597550341,
+                "uptime_fraction_mean": -0.011015407845230038,
+                "cost_usd_sum": 0.034228867754234366,
+                "cost_per_cpu_mean": -0.42628240992113947
+            },
+            "memory_used_gb_mean": {
+                "cpu_utilization_mean": 0.9793777763950395,
+                "memory_used_gb_mean": 1.0,
+                "disk_read_bytes_sum": 0.613175757999024,
+                "disk_write_bytes_sum": -0.03760292914016553,
+                "ingress_bytes_sum": 0.006066533059668128,
+                "egress_bytes_sum": 0.007049867398724169,
+                "network_total_bytes_sum": 0.008649735822691556,
+                "uptime_fraction_mean": -0.01194954650336886,
+                "cost_usd_sum": 0.027446870045383206,
+                "cost_per_cpu_mean": -0.41890701704185024
+            },
+            "disk_read_bytes_sum": {
+                "cpu_utilization_mean": 0.6277702235054057,
+                "memory_used_gb_mean": 0.613175757999024,
+                "disk_read_bytes_sum": 1.0,
+                "disk_write_bytes_sum": -0.04232183840755938,
+                "ingress_bytes_sum": -0.037665106896717954,
+                "egress_bytes_sum": -0.007765459393022173,
+                "network_total_bytes_sum": -0.03719629409018641,
+                "uptime_fraction_mean": -0.011609560865896559,
+                "cost_usd_sum": 0.018068719121278994,
+                "cost_per_cpu_mean": -0.30886180778649197
+            },
+            "disk_write_bytes_sum": {
+                "cpu_utilization_mean": -0.04432971475805488,
+                "memory_used_gb_mean": -0.03760292914016553,
+                "disk_read_bytes_sum": -0.04232183840755938,
+                "disk_write_bytes_sum": 1.0,
+                "ingress_bytes_sum": -0.007218371979018363,
+                "egress_bytes_sum": 0.013920175723625553,
+                "network_total_bytes_sum": -6.427002395855013e-05,
+                "uptime_fraction_mean": -0.020604080110527397,
+                "cost_usd_sum": 0.02293061030415026,
+                "cost_per_cpu_mean": 0.0477936547399804
+            },
+            "ingress_bytes_sum": {
+                "cpu_utilization_mean": 0.008539013574975916,
+                "memory_used_gb_mean": 0.006066533059668128,
+                "disk_read_bytes_sum": -0.037665106896717954,
+                "disk_write_bytes_sum": -0.007218371979018363,
+                "ingress_bytes_sum": 1.0,
+                "egress_bytes_sum": -0.009398397829516993,
+                "network_total_bytes_sum": 0.8887213849901267,
+                "uptime_fraction_mean": -0.0013209113677447634,
+                "cost_usd_sum": 0.03836419120297167,
+                "cost_per_cpu_mean": 0.05828031613808137
+            },
+            "egress_bytes_sum": {
+                "cpu_utilization_mean": 0.0061622805759121504,
+                "memory_used_gb_mean": 0.007049867398724169,
+                "disk_read_bytes_sum": -0.007765459393022173,
+                "disk_write_bytes_sum": 0.013920175723625553,
+                "ingress_bytes_sum": -0.009398397829516993,
+                "egress_bytes_sum": 1.0,
+                "network_total_bytes_sum": 0.45007490189150695,
+                "uptime_fraction_mean": 0.045837126821237875,
+                "cost_usd_sum": 0.07506540364036549,
+                "cost_per_cpu_mean": 0.042694373651290383
+            },
+            "network_total_bytes_sum": {
+                "cpu_utilization_mean": 0.010450805597550341,
+                "memory_used_gb_mean": 0.008649735822691556,
+                "disk_read_bytes_sum": -0.03719629409018641,
+                "disk_write_bytes_sum": -6.427002395855013e-05,
+                "ingress_bytes_sum": 0.8887213849901267,
+                "egress_bytes_sum": 0.45007490189150695,
+                "network_total_bytes_sum": 1.0,
+                "uptime_fraction_mean": 0.01983524000937778,
+                "cost_usd_sum": 0.06867546536324408,
+                "cost_per_cpu_mean": 0.07162008744286905
+            },
+            "uptime_fraction_mean": {
+                "cpu_utilization_mean": -0.011015407845230038,
+                "memory_used_gb_mean": -0.01194954650336886,
+                "disk_read_bytes_sum": -0.011609560865896559,
+                "disk_write_bytes_sum": -0.020604080110527397,
+                "ingress_bytes_sum": -0.0013209113677447634,
+                "egress_bytes_sum": 0.045837126821237875,
+                "network_total_bytes_sum": 0.01983524000937778,
+                "uptime_fraction_mean": 1.0,
+                "cost_usd_sum": 0.01250576844919267,
+                "cost_per_cpu_mean": 0.02112013964052438
+            },
+            "cost_usd_sum": {
+                "cpu_utilization_mean": 0.034228867754234366,
+                "memory_used_gb_mean": 0.027446870045383206,
+                "disk_read_bytes_sum": 0.018068719121278994,
+                "disk_write_bytes_sum": 0.02293061030415026,
+                "ingress_bytes_sum": 0.03836419120297167,
+                "egress_bytes_sum": 0.07506540364036549,
+                "network_total_bytes_sum": 0.06867546536324408,
+                "uptime_fraction_mean": 0.01250576844919267,
+                "cost_usd_sum": 1.0,
+                "cost_per_cpu_mean": 0.7381422922797166
+            },
+            "cost_per_cpu_mean": {
+                "cpu_utilization_mean": -0.42628240992113947,
+                "memory_used_gb_mean": -0.41890701704185024,
+                "disk_read_bytes_sum": -0.30886180778649197,
+                "disk_write_bytes_sum": 0.0477936547399804,
+                "ingress_bytes_sum": 0.05828031613808137,
+                "egress_bytes_sum": 0.042694373651290383,
+                "network_total_bytes_sum": 0.07162008744286905,
+                "uptime_fraction_mean": 0.02112013964052438,
+                "cost_usd_sum": 0.7381422922797166,
+                "cost_per_cpu_mean": 1.0
+            }
+        },
+        "strong_correlations": [
+            {
+                "feature1": "cpu_utilization_mean",
+                "feature2": "memory_used_gb_mean",
+                "correlation": 0.9793777763950395
+            },
+            {
+                "feature1": "ingress_bytes_sum",
+                "feature2": "network_total_bytes_sum",
+                "correlation": 0.8887213849901267
+            },
+            {
+                "feature1": "cost_usd_sum",
+                "feature2": "cost_per_cpu_mean",
+                "correlation": 0.7381422922797166
+            }
+        ],
+        "cost_correlations": [
+            {
+                "feature": "cost_per_cpu_mean",
+                "correlation_with_cost": 0.7381422922797166
+            },
+            {
+                "feature": "egress_bytes_sum",
+                "correlation_with_cost": 0.07506540364036549
+            },
+            {
+                "feature": "network_total_bytes_sum",
+                "correlation_with_cost": 0.06867546536324408
+            },
+            {
+                "feature": "ingress_bytes_sum",
+                "correlation_with_cost": 0.03836419120297167
+            },
+            {
+                "feature": "cpu_utilization_mean",
+                "correlation_with_cost": 0.034228867754234366
+            },
+            {
+                "feature": "memory_used_gb_mean",
+                "correlation_with_cost": 0.027446870045383206
+            },
+            {
+                "feature": "disk_write_bytes_sum",
+                "correlation_with_cost": 0.02293061030415026
+            },
+            {
+                "feature": "disk_read_bytes_sum",
+                "correlation_with_cost": 0.018068719121278994
+            },
+            {
+                "feature": "uptime_fraction_mean",
+                "correlation_with_cost": 0.01250576844919267
+            }
+        ]
+    },
+    "trend_analysis": {
+        "overall": {
+            "date_range": {
+                "start_date": "2025-01-01",
+                "end_date": "2025-12-31"
+            },
+            "CPU Utilization": {
+                "start_value": 0.0717595,
+                "end_value": 0.070953,
+                "percent_change": -1.1238930037137962,
+                "trend": "stable"
+            },
+            "Memory Usage (GB)": {
+                "start_value": 11.119060218334198,
+                "end_value": 11.101365089416504,
+                "percent_change": -0.15914230672585644,
+                "trend": "stable"
+            },
+            "Daily Cost": {
+                "start_value": 1.899894,
+                "end_value": 1.733463,
+                "percent_change": -8.760015032417598,
+                "trend": "decreasing"
+            },
+            "Uptime Fraction": {
+                "start_value": 0.394169,
+                "end_value": 0.3873255,
+                "percent_change": -1.7361842255479254,
+                "trend": "stable"
+            },
+            "Total Network Traffic": {
+                "start_value": 44701.4718,
+                "end_value": 42743.1247,
+                "percent_change": -4.380945461397536,
+                "trend": "stable"
+            }
+        },
+        "per_instance": {
+            "5551001": {
+                "date_range": {
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "total_days": 365
+                },
+                "cpu_utilization": {
+                    "mean": 0.06100973424657535,
+                    "median": 0.0635965,
+                    "min": 0.0206245,
+                    "max": 0.1005505,
+                    "std": 0.023300308771224493,
+                    "trend": "stable"
+                },
+                "memory_usage_gb": {
+                    "mean": 10.767862302799747,
+                    "median": 10.896474123001099,
+                    "min": 9.061768651008606,
+                    "max": 12.619420886039734,
+                    "std": 0.9370706588678002,
+                    "trend": "stable"
+                },
+                "cost": {
+                    "total": 140.534953,
+                    "mean_daily": 0.38502726849315067,
+                    "median_daily": 0.302183,
+                    "min_daily": 0.139325,
+                    "max_daily": 0.660748,
+                    "std": 0.1898339862235017,
+                    "trend": "stable"
+                },
+                "uptime_fraction": {
+                    "mean": 0.40756271780821907,
+                    "median": 0.4110035,
+                    "min": 0.1864155,
+                    "max": 0.6442975,
+                    "std": 0.09840975454422438,
+                    "trend": "stable"
+                },
+                "network_traffic": {
+                    "total_gb": 0.0031804795302450657,
+                    "mean_daily_gb": 8.713642548616618e-06,
+                    "median_daily_gb": 8.694555144757033e-06,
+                    "min_daily_gb": 2.9410049319267274e-06,
+                    "max_daily_gb": 1.5171983279287816e-05,
+                    "trend": "stable"
+                },
+                "disk_read": {
+                    "total_gb": 0.022919117473065853,
+                    "mean_daily_gb": 6.279210266593385e-05,
+                    "median_daily_gb": 6.384216248989105e-05,
+                    "trend": "stable"
+                },
+                "disk_write": {
+                    "total_gb": 0.07083788607269526,
+                    "mean_daily_gb": 0.00019407640019916507,
+                    "median_daily_gb": 2.6996247470378876e-05,
+                    "trend": "decreasing"
+                },
+                "network_ingress": {
+                    "total_gb": 0.002475544615089893,
+                    "mean_daily_gb": 6.782314013944913e-06,
+                    "trend": "stable"
+                },
+                "network_egress": {
+                    "total_gb": 0.0007049349151551724,
+                    "mean_daily_gb": 1.931328534671705e-06,
+                    "trend": "stable"
+                },
+                "cost_efficiency": {
+                    "mean_cost_per_cpu": 3.842609198701139,
+                    "median_cost_per_cpu": 2.84180471819047,
+                    "min_cost_per_cpu": 1.5144107832748501,
+                    "max_cost_per_cpu": 14.174106291189918,
+                    "trend": "stable"
+                }
+            },
+            "5551002": {
+                "date_range": {
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "total_days": 365
+                },
+                "cpu_utilization": {
+                    "mean": 0.06085492876712329,
+                    "median": 0.062435000000000004,
+                    "min": 0.0209995,
+                    "max": 0.1025645,
+                    "std": 0.02367808739173471,
+                    "trend": "stable"
+                },
+                "memory_usage_gb": {
+                    "mean": 10.771128310732646,
+                    "median": 10.849907994270325,
+                    "min": 8.889473974704742,
+                    "max": 12.57285475730896,
+                    "std": 0.9446442762250422,
+                    "trend": "stable"
+                },
+                "cost": {
+                    "total": 145.27929799999998,
+                    "mean_daily": 0.3980254739726027,
+                    "median_daily": 0.246967,
+                    "min_daily": 0.031634,
+                    "max_daily": 0.736567,
+                    "std": 0.27019927978028174,
+                    "trend": "stable"
+                },
+                "uptime_fraction": {
+                    "mean": 0.417535195890411,
+                    "median": 0.413683,
+                    "min": 0.2012525,
+                    "max": 0.6409180000000001,
+                    "std": 0.09545075339603952,
+                    "trend": "stable"
+                },
+                "network_traffic": {
+                    "total_gb": 0.0032395562059246005,
+                    "mean_daily_gb": 8.875496454587947e-06,
+                    "median_daily_gb": 8.759303949773311e-06,
+                    "min_daily_gb": 3.548622503876686e-06,
+                    "max_daily_gb": 1.504906266927719e-05,
+                    "trend": "stable"
+                },
+                "disk_read": {
+                    "total_gb": 0.022628323175013065,
+                    "mean_daily_gb": 6.19954059589399e-05,
+                    "median_daily_gb": 6.324518471956253e-05,
+                    "trend": "stable"
+                },
+                "disk_write": {
+                    "total_gb": 0.0630983104929328,
+                    "mean_daily_gb": 0.00017287208354228162,
+                    "median_daily_gb": 2.6090070605278015e-05,
+                    "trend": "increasing"
+                },
+                "network_ingress": {
+                    "total_gb": 0.002515664080996066,
+                    "mean_daily_gb": 6.892230358893332e-06,
+                    "trend": "stable"
+                },
+                "network_egress": {
+                    "total_gb": 0.0007238921249285342,
+                    "mean_daily_gb": 1.983266095694614e-06,
+                    "trend": "stable"
+                },
+                "cost_efficiency": {
+                    "mean_cost_per_cpu": 4.9233340266123475,
+                    "median_cost_per_cpu": 4.329124349114489,
+                    "min_cost_per_cpu": 0.20542018584599983,
+                    "max_cost_per_cpu": 15.152345828053555,
+                    "trend": "stable"
+                }
+            },
+            "5551003": {
+                "date_range": {
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "total_days": 365
+                },
+                "cpu_utilization": {
+                    "mean": 0.06107196438356165,
+                    "median": 0.062736,
+                    "min": 0.0210775,
+                    "max": 0.10432849999999999,
+                    "std": 0.023615597927921145,
+                    "trend": "stable"
+                },
+                "memory_usage_gb": {
+                    "mean": 10.760386206515848,
+                    "median": 10.80334186553955,
+                    "min": 9.01985913515091,
+                    "max": 12.712553143501282,
+                    "std": 0.9412911627738771,
+                    "trend": "stable"
+                },
+                "cost": {
+                    "total": 141.26092699999998,
+                    "mean_daily": 0.38701623835616433,
+                    "median_daily": 0.484091,
+                    "min_daily": 0.13626100000000002,
+                    "max_daily": 0.6729689999999999,
+                    "std": 0.19475446993978904,
+                    "trend": "stable"
+                },
+                "uptime_fraction": {
+                    "mean": 0.3951669424657534,
+                    "median": 0.39702899999999997,
+                    "min": 0.175904,
+                    "max": 0.6352195,
+                    "std": 0.10118317713916715,
+                    "trend": "stable"
+                },
+                "network_traffic": {
+                    "total_gb": 0.003253423213027418,
+                    "mean_daily_gb": 8.913488254869638e-06,
+                    "median_daily_gb": 8.957008551806211e-06,
+                    "min_daily_gb": 3.0586304143071174e-06,
+                    "max_daily_gb": 1.4639824628829956e-05,
+                    "trend": "stable"
+                },
+                "disk_read": {
+                    "total_gb": 0.022443083114922047,
+                    "mean_daily_gb": 6.148789894499191e-05,
+                    "median_daily_gb": 6.342120468616486e-05,
+                    "trend": "stable"
+                },
+                "disk_write": {
+                    "total_gb": 0.06914452277123928,
+                    "mean_daily_gb": 0.0001894370486883268,
+                    "median_daily_gb": 2.6445835828781128e-05,
+                    "trend": "stable"
+                },
+                "network_ingress": {
+                    "total_gb": 0.002573823288176209,
+                    "mean_daily_gb": 7.051570652537559e-06,
+                    "trend": "stable"
+                },
+                "network_egress": {
+                    "total_gb": 0.000679599924851209,
+                    "mean_daily_gb": 1.8619176023320795e-06,
+                    "trend": "stable"
+                },
+                "cost_efficiency": {
+                    "mean_cost_per_cpu": 3.9120624491324434,
+                    "median_cost_per_cpu": 2.850699864748013,
+                    "min_cost_per_cpu": 1.509639187013843,
+                    "max_cost_per_cpu": 14.451761501495794,
+                    "trend": "stable"
+                }
+            },
+            "5551004": {
+                "date_range": {
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "total_days": 365
+                },
+                "cpu_utilization": {
+                    "mean": 0.061631582191780825,
+                    "median": 0.06371199999999999,
+                    "min": 0.0220355,
+                    "max": 0.10290750000000001,
+                    "std": 0.024116749744989615,
+                    "trend": "stable"
+                },
+                "memory_usage_gb": {
+                    "mean": 10.79973139583248,
+                    "median": 10.943040251731873,
+                    "min": 8.810311555862427,
+                    "max": 12.619420886039734,
+                    "std": 0.9757333322703566,
+                    "trend": "stable"
+                },
+                "cost": {
+                    "total": 146.679349,
+                    "mean_daily": 0.4018612301369863,
+                    "median_daily": 0.597631,
+                    "min_daily": 0.027389999999999998,
+                    "max_daily": 0.74723,
+                    "std": 0.27319364150999353,
+                    "trend": "stable"
+                },
+                "uptime_fraction": {
+                    "mean": 0.3986720479452055,
+                    "median": 0.39706450000000004,
+                    "min": 0.19064399999999998,
+                    "max": 0.64195,
+                    "std": 0.1000376863029424,
+                    "trend": "stable"
+                },
+                "network_traffic": {
+                    "total_gb": 0.003231336858961731,
+                    "mean_daily_gb": 8.852977695785565e-06,
+                    "median_daily_gb": 8.79659429192543e-06,
+                    "min_daily_gb": 2.3511945270001887e-06,
+                    "max_daily_gb": 1.56523734331131e-05,
+                    "trend": "stable"
+                },
+                "disk_read": {
+                    "total_gb": 0.023021714761853218,
+                    "mean_daily_gb": 6.307319112836498e-05,
+                    "median_daily_gb": 6.383378058671951e-05,
+                    "trend": "stable"
+                },
+                "disk_write": {
+                    "total_gb": 0.07476009707897902,
+                    "mean_daily_gb": 0.0002048221837780247,
+                    "median_daily_gb": 2.6854686439037323e-05,
+                    "trend": "decreasing"
+                },
+                "network_ingress": {
+                    "total_gb": 0.00253914989894256,
+                    "mean_daily_gb": 6.956575065596055e-06,
+                    "trend": "stable"
+                },
+                "network_egress": {
+                    "total_gb": 0.0006921869600191713,
+                    "mean_daily_gb": 1.8964026301895103e-06,
+                    "trend": "stable"
+                },
+                "cost_efficiency": {
+                    "mean_cost_per_cpu": 4.961618012570672,
+                    "median_cost_per_cpu": 5.225781089187349,
+                    "min_cost_per_cpu": 0.18415036305582927,
+                    "max_cost_per_cpu": 14.615833319742357,
+                    "trend": "stable"
+                }
+            },
+            "5551005": {
+                "date_range": {
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "total_days": 365
+                },
+                "cpu_utilization": {
+                    "mean": 0.06096870821917808,
+                    "median": 0.0640795,
+                    "min": 0.02138,
+                    "max": 0.1040925,
+                    "std": 0.02308011096298431,
+                    "trend": "stable"
+                },
+                "memory_usage_gb": {
+                    "mean": 10.74663325123591,
+                    "median": 10.849907994270325,
+                    "min": 8.991919457912445,
+                    "max": 12.759119272232056,
+                    "std": 0.9266559788821669,
+                    "trend": "stable"
+                },
+                "cost": {
+                    "total": 140.82149800000002,
+                    "mean_daily": 0.3858123232876713,
+                    "median_daily": 0.298309,
+                    "min_daily": 0.133809,
+                    "max_daily": 0.6699710000000001,
+                    "std": 0.19209854239001328,
+                    "trend": "stable"
+                },
+                "uptime_fraction": {
+                    "mean": 0.41845027260273976,
+                    "median": 0.42415650000000005,
+                    "min": 0.189784,
+                    "max": 0.6291055000000001,
+                    "std": 0.09917776841983973,
+                    "trend": "stable"
+                },
+                "network_traffic": {
+                    "total_gb": 0.0032056447870098055,
+                    "mean_daily_gb": 8.782588457561111e-06,
+                    "median_daily_gb": 8.732922747731208e-06,
+                    "min_daily_gb": 2.691173180937767e-06,
+                    "max_daily_gb": 1.44875755533576e-05,
+                    "trend": "stable"
+                },
+                "disk_read": {
+                    "total_gb": 0.022425145842134953,
+                    "mean_daily_gb": 6.143875573187658e-05,
+                    "median_daily_gb": 6.165727972984314e-05,
+                    "trend": "stable"
+                },
+                "disk_write": {
+                    "total_gb": 0.06971530430018902,
+                    "mean_daily_gb": 0.000191000833699148,
+                    "median_daily_gb": 2.696644514799118e-05,
+                    "trend": "increasing"
+                },
+                "network_ingress": {
+                    "total_gb": 0.002485665400326252,
+                    "mean_daily_gb": 6.810042192674663e-06,
+                    "trend": "stable"
+                },
+                "network_egress": {
+                    "total_gb": 0.0007199793866835534,
+                    "mean_daily_gb": 1.972546264886448e-06,
+                    "trend": "increasing"
+                },
+                "cost_efficiency": {
+                    "mean_cost_per_cpu": 3.829458830515388,
+                    "median_cost_per_cpu": 2.921152388213455,
+                    "min_cost_per_cpu": 1.433254363992132,
+                    "max_cost_per_cpu": 13.970336308431692,
+                    "trend": "stable"
+                }
+            }
+        }
+    },
+    "cost_analysis": {
+        "overall": {
+            "total_cost": 714.5760250000001,
+            "average_daily_cost_per_instance": 0.3915485068493151,
+            "max_daily_cost": 0.74723,
+            "min_daily_cost": 0.027389999999999998,
+            "cost_std_deviation": 0.22723908665057946,
+            "projected_monthly_cost": 11.746455205479453,
+            "average_cost_per_cpu_utilization": 4.293816503506398
+        },
+        "per_instance": {
+            "5551001": {
+                "total_cost": 140.534953,
+                "avg_daily_cost": 0.38502726849315067,
+                "max_daily_cost": 0.660748,
+                "min_daily_cost": 0.139325
+            },
+            "5551002": {
+                "total_cost": 145.27929799999998,
+                "avg_daily_cost": 0.3980254739726027,
+                "max_daily_cost": 0.736567,
+                "min_daily_cost": 0.031634
+            },
+            "5551003": {
+                "total_cost": 141.26092699999998,
+                "avg_daily_cost": 0.38701623835616433,
+                "max_daily_cost": 0.6729689999999999,
+                "min_daily_cost": 0.13626100000000002
+            },
+            "5551004": {
+                "total_cost": 146.679349,
+                "avg_daily_cost": 0.4018612301369863,
+                "max_daily_cost": 0.74723,
+                "min_daily_cost": 0.027389999999999998
+            },
+            "5551005": {
+                "total_cost": 140.82149800000002,
+                "avg_daily_cost": 0.3858123232876713,
+                "max_daily_cost": 0.6699710000000001,
+                "min_daily_cost": 0.133809
+            }
+        }
+    },
+    "utilization_insights": {
+        "overall": {
+            "cpu": {
+                "average_utilization": 0.06110738356164383,
+                "utilization_category": "under-utilized",
+                "max_utilization": 0.159903,
+                "min_utilization": 0.020028
+            },
+            "memory": {
+                "average_memory_gb": 10.769148293423326,
+                "max_memory_gb": 15.087425708770752,
+                "min_memory_gb": 8.717179298400879
+            },
+            "network": {
+                "total_network_bytes": 17298453.8701,
+                "total_network_gb": 0.01611044059516862,
+                "average_daily_network_gb": 8.827638682284176e-06
+            },
+            "uptime": {
+                "average_uptime_fraction": 0.4074774353424658,
+                "uptime_percentage": 40.74774353424658,
+                "reliability_rating": "needs improvement"
+            }
+        },
+        "per_instance": {
+            "5551001": {
+                "cpu": {
+                    "average": 0.06100973424657535,
+                    "max": 0.159799,
+                    "min": 0.020067,
+                    "std": 0.023300308771224493,
+                    "category": "under-utilized"
+                },
+                "memory": {
+                    "average_gb": 10.767862302799747,
+                    "max_gb": 15.087425708770752,
+                    "min_gb": 8.773058652877808,
+                    "std_gb": 0.9370706588678002
+                },
+                "network": {
+                    "total_gb": 0.0031804795302450657,
+                    "avg_daily_gb": 8.713642548616618e-06,
+                    "max_daily_gb": 1.5171983279287816e-05,
+                    "min_daily_gb": 2.9410049319267274e-06,
+                    "ingress_gb": 0.002475544615089893,
+                    "egress_gb": 0.0007049349151551724
+                },
+                "disk_io": {
+                    "total_read_gb": 0.022919117473065853,
+                    "avg_daily_read_gb": 6.279210266593385e-05,
+                    "total_write_gb": 0.07083788607269526,
+                    "avg_daily_write_gb": 0.00019407640019916507
+                },
+                "uptime": {
+                    "average_fraction": 0.40756271780821907,
+                    "percentage": 40.756271780821905,
+                    "max_fraction": 0.64994,
+                    "min_fraction": 0.170126,
+                    "reliability_rating": "needs improvement"
+                },
+                "cost_efficiency": {
+                    "average_cost_per_cpu": 3.842609198701139,
+                    "max_cost_per_cpu": 14.174106291189918,
+                    "min_cost_per_cpu": 1.5144107832748501
+                }
+            },
+            "5551002": {
+                "cpu": {
+                    "average": 0.06085492876712329,
+                    "max": 0.159398,
+                    "min": 0.020292,
+                    "std": 0.02367808739173471,
+                    "category": "under-utilized"
+                },
+                "memory": {
+                    "average_gb": 10.771128310732646,
+                    "max_gb": 14.901161193847656,
+                    "min_gb": 8.717179298400879,
+                    "std_gb": 0.9446442762250422
+                },
+                "network": {
+                    "total_gb": 0.0032395562059246005,
+                    "avg_daily_gb": 8.875496454587947e-06,
+                    "max_daily_gb": 1.504906266927719e-05,
+                    "min_daily_gb": 3.548622503876686e-06,
+                    "ingress_gb": 0.002515664080996066,
+                    "egress_gb": 0.0007238921249285342
+                },
+                "disk_io": {
+                    "total_read_gb": 0.022628323175013065,
+                    "avg_daily_read_gb": 6.19954059589399e-05,
+                    "total_write_gb": 0.0630983104929328,
+                    "avg_daily_write_gb": 0.00017287208354228162
+                },
+                "uptime": {
+                    "average_fraction": 0.417535195890411,
+                    "percentage": 41.7535195890411,
+                    "max_fraction": 0.649957,
+                    "min_fraction": 0.172703,
+                    "reliability_rating": "needs improvement"
+                },
+                "cost_efficiency": {
+                    "average_cost_per_cpu": 4.9233340266123475,
+                    "max_cost_per_cpu": 15.152345828053555,
+                    "min_cost_per_cpu": 0.20542018584599983
+                }
+            },
+            "5551003": {
+                "cpu": {
+                    "average": 0.06107196438356165,
+                    "max": 0.159903,
+                    "min": 0.020028,
+                    "std": 0.023615597927921145,
+                    "category": "under-utilized"
+                },
+                "memory": {
+                    "average_gb": 10.760386206515848,
+                    "max_gb": 14.994293451309204,
+                    "min_gb": 8.745118975639343,
+                    "std_gb": 0.9412911627738771
+                },
+                "network": {
+                    "total_gb": 0.003253423213027418,
+                    "avg_daily_gb": 8.913488254869638e-06,
+                    "max_daily_gb": 1.4639824628829956e-05,
+                    "min_daily_gb": 3.0586304143071174e-06,
+                    "ingress_gb": 0.002573823288176209,
+                    "egress_gb": 0.000679599924851209
+                },
+                "disk_io": {
+                    "total_read_gb": 0.022443083114922047,
+                    "avg_daily_read_gb": 6.148789894499191e-05,
+                    "total_write_gb": 0.06914452277123928,
+                    "avg_daily_write_gb": 0.0001894370486883268
+                },
+                "uptime": {
+                    "average_fraction": 0.3951669424657534,
+                    "percentage": 39.51669424657534,
+                    "max_fraction": 0.649532,
+                    "min_fraction": 0.170126,
+                    "reliability_rating": "needs improvement"
+                },
+                "cost_efficiency": {
+                    "average_cost_per_cpu": 3.9120624491324434,
+                    "max_cost_per_cpu": 14.451761501495794,
+                    "min_cost_per_cpu": 1.509639187013843
+                }
+            },
+            "5551004": {
+                "cpu": {
+                    "average": 0.061631582191780825,
+                    "max": 0.1599,
+                    "min": 0.020291,
+                    "std": 0.024116749744989615,
+                    "category": "under-utilized"
+                },
+                "memory": {
+                    "average_gb": 10.79973139583248,
+                    "max_gb": 14.901161193847656,
+                    "min_gb": 8.763745427131653,
+                    "std_gb": 0.9757333322703566
+                },
+                "network": {
+                    "total_gb": 0.003231336858961731,
+                    "avg_daily_gb": 8.852977695785565e-06,
+                    "max_daily_gb": 1.56523734331131e-05,
+                    "min_daily_gb": 2.3511945270001887e-06,
+                    "ingress_gb": 0.00253914989894256,
+                    "egress_gb": 0.0006921869600191713
+                },
+                "disk_io": {
+                    "total_read_gb": 0.023021714761853218,
+                    "avg_daily_read_gb": 6.307319112836498e-05,
+                    "total_write_gb": 0.07476009707897902,
+                    "avg_daily_write_gb": 0.0002048221837780247
+                },
+                "uptime": {
+                    "average_fraction": 0.3986720479452055,
+                    "percentage": 39.867204794520546,
+                    "max_fraction": 0.649682,
+                    "min_fraction": 0.170688,
+                    "reliability_rating": "needs improvement"
+                },
+                "cost_efficiency": {
+                    "average_cost_per_cpu": 4.961618012570672,
+                    "max_cost_per_cpu": 14.615833319742357,
+                    "min_cost_per_cpu": 0.18415036305582927
+                }
+            },
+            "5551005": {
+                "cpu": {
+                    "average": 0.06096870821917808,
+                    "max": 0.159583,
+                    "min": 0.020111,
+                    "std": 0.02308011096298431,
+                    "category": "under-utilized"
+                },
+                "memory": {
+                    "average_gb": 10.74663325123591,
+                    "max_gb": 14.994293451309204,
+                    "min_gb": 8.791685104370117,
+                    "std_gb": 0.9266559788821669
+                },
+                "network": {
+                    "total_gb": 0.0032056447870098055,
+                    "avg_daily_gb": 8.782588457561111e-06,
+                    "max_daily_gb": 1.44875755533576e-05,
+                    "min_daily_gb": 2.691173180937767e-06,
+                    "ingress_gb": 0.002485665400326252,
+                    "egress_gb": 0.0007199793866835534
+                },
+                "disk_io": {
+                    "total_read_gb": 0.022425145842134953,
+                    "avg_daily_read_gb": 6.143875573187658e-05,
+                    "total_write_gb": 0.06971530430018902,
+                    "avg_daily_write_gb": 0.000191000833699148
+                },
+                "uptime": {
+                    "average_fraction": 0.41845027260273976,
+                    "percentage": 41.84502726027397,
+                    "max_fraction": 0.649778,
+                    "min_fraction": 0.170675,
+                    "reliability_rating": "needs improvement"
+                },
+                "cost_efficiency": {
+                    "average_cost_per_cpu": 3.829458830515388,
+                    "max_cost_per_cpu": 13.970336308431692,
+                    "min_cost_per_cpu": 1.433254363992132
+                }
+            }
+        }
+    },
+    "anomalies": {}
+}
