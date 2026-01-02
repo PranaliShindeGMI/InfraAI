@@ -1,18 +1,19 @@
 import os
 import json
-import google.generativeai as genai
+import asyncio
 from dotenv import load_dotenv
 import pandas as pd
+
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai import types
+
 from backend.analysis import analyze_vm_data
- 
+from backend.vm_recommender.agent import root_agent as vm_recommender_agent
+
 # Load environment variables
 load_dotenv()
- 
-# Configure Google AI
-GOOGLE_API_KEY = os.getenv('GOOGLE_AI_API_KEY')
-if GOOGLE_API_KEY:
-    genai.configure(api_key=GOOGLE_API_KEY)
- 
+
 # Load agent context
 CONTEXT_FILE_PATH = os.path.join(os.path.dirname(__file__), 'agent_context.txt')
  
@@ -141,16 +142,64 @@ For vm_instance, use actual VM IDs from the data summary if available, otherwise
         alerts = parse_gemini_alerts_response(response.text)
         return alerts
        
+        data_summary = prepare_data_summary(df, analysis_results)
+        
+        # Call vm_recommender_agent via ADK Runner, similar to agent_run.py
+        async def _call_agent(summary: str) -> str:
+            session_service = InMemorySessionService()
+            await session_service.create_session(
+                app_name="vm_recommender_app",
+                user_id="backend_user",
+                session_id="vm_recommendations_session",
+                state={"data_summary": summary},
+            )
+
+            runner = Runner(
+                agent=vm_recommender_agent,
+                app_name="vm_recommender_app",
+                session_service=session_service,
+            )
+
+            content = types.Content(role="user", parts=[types.Part(text=summary)])
+
+            final_text = None
+            async for event in runner.run_async(
+                user_id="backend_user",
+                session_id="vm_recommendations_session",
+                new_message=content,
+            ):
+                if event.is_final_response():
+                    parts = (
+                        event.content.parts
+                        if event.content and event.content.parts
+                        else []
+                    )
+                    final_text = "".join(p.text or "" for p in parts)
+                    break
+
+            return final_text or "{}"
+
+        # Run the async agent call synchronously
+        agent_response_text = asyncio.run(_call_agent(data_summary))
+
+        # Parse the response (expects the JSON structure defined in the agent)
+        result = parse_gemini_response(agent_response_text)
+        
+        # Add service information
+        result['service'] = 'Compute Engine'
+        result['model_used'] = 'gemini-2.5-flash'
+        
+        return result
+        
     except Exception as e:
-        return [{
-            "title": "Error Generating Recommendations",
-            "vm_instance": "N/A",
-            "impact_level": "High",
-            "category": "System",
-            "detailed_explanation": f"Failed to generate recommendations: {str(e)}\\n\\nRemediation:\\n1. Check API key configuration\\n2. Verify network connectivity\\n3. Review error logs"
-        }]
- 
- 
+        return {
+            "error": f"Failed to generate recommendations: {str(e)}",
+            "service": "Compute Engine",
+            "insights": ["Error occurred during analysis"],
+            "recommendations": ["Please check API key and try again"]
+        }
+
+
 def prepare_data_summary(df: pd.DataFrame, analysis_results: dict) -> str:
     """
     Prepare a concise summary of VM data for the AI model
