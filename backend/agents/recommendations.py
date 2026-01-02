@@ -67,6 +67,10 @@ def generate_vm_recommendations(df):
         # Load agent context
         agent_context = load_agent_context()
        
+        forecast_csv_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'VM', 'data', 'forecast', 'vm_forecasts.csv')
+        forecasted_values_df = pd.read_csv(forecast_csv_path)
+        forecast_summary = forecasted_values_df.to_string()
+        print("Forecast Summary Loaded for Recommendations.",forecasted_values_df.shape)
         # Create the prompt for Gemini
         prompt = f"""
 Analyze the following VM instance data and generate infrastructure alerts.
@@ -74,7 +78,9 @@ Analyze the following VM instance data and generate infrastructure alerts.
 DATA SUMMARY:
 {data_summary}
  
-{}
+FORECASTED VALUES (next 5 days):
+{forecast_summary}
+
 TASK: Generate 5-8 VM alerts based on the data above indicating potential issues or optimization opportunities. Do not include any alerts involving shortcomings of data.
  
 Examples of alert:
