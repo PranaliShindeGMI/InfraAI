@@ -33,7 +33,8 @@ async def call_vm_recommender_agent(data_summary: str):
 
     # Prepare the user message
     content = types.Content(role="user", parts=[types.Part(text=data_summary)])
-
+    print("Prepared content for agent:", content)
+    print("----------------------")
 
     # Execute the agent and collect final response
     final_text = None
@@ -50,12 +51,12 @@ async def call_vm_recommender_agent(data_summary: str):
  
     return final_text
  
-# # Run it
-# if __name__ == "__main__":
-#     load_dotenv()
-#     # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-#     summary_text = (
-#         "VM usage: CPU 12% avg, memory 30%. Running always. Disk idle."
-#     )
-#     response = asyncio.run(call_vm_recommender_agent(summary_text))
-#     print("Agent final response:", response)
+# Run it
+if __name__ == "__main__":
+    load_dotenv()
+    # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    summary_text = (
+        "VM usage: CPU 12% avg, memory 30%. Running always. Disk idle."
+    )
+    response = asyncio.run(call_vm_recommender_agent(summary_text))
+    print("Agent final response:", response)
