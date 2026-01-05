@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 from typing import Dict, Any, List
-from backend.preprocessing import preprocess_vm_data
 import os
 import json
 

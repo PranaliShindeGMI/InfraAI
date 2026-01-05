@@ -6,6 +6,7 @@ import os
 from backend.agents import generate_vm_recommendations 
 from backend.preprocessing import preprocess_vm_data
 from backend.analysis import analyze_vm_data
+from backend.model.VM.vm import run_vm_forecasting
 
 # -----------------------------
 # LOAD PROCESSED DATA
@@ -39,6 +40,7 @@ def vm_recommendations():
         df = load_vm_data()
         df = preprocess_vm_data(df)
         analysis_results = analyze_vm_data(df)
+        forecasting_results = run_vm_forecasting()
         output = generate_vm_recommendations(df)
         return JSONResponse(content=output)
         return {"status": "vm backend running"}
