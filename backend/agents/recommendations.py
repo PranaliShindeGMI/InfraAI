@@ -49,17 +49,18 @@ def generate_vm_recommendations(df):
     ]
     """
    
-    if not GOOGLE_API_KEY:
-        return [{
-            "title": "Configuration Error",
-            "vm_instance": "N/A",
-            "impact_level": "High",
-            "category": "Configuration",
-            "detailed_explanation": "GOOGLE_AI_API_KEY not found in environment variables. Please configure the API key to generate recommendations."
-        }]
+    # if not GOOGLE_API_KEY:
+    #     return [{
+    #         "title": "Configuration Error",
+    #         "vm_instance": "N/A",
+    #         "impact_level": "High",
+    #         "category": "Configuration",
+    #         "detailed_explanation": "GOOGLE_AI_API_KEY not found in environment variables. Please configure the API key to generate recommendations."
+    #     }]
    
     try:
         # First, analyze the data to get statistical insights
+        print("Starting VM data analysis for recommendations...")
         analysis_results = analyze_vm_data(df)
        
         # Prepare a summary of the data for the AI model
@@ -73,76 +74,75 @@ def generate_vm_recommendations(df):
         forecast_summary = forecasted_values_df.to_string()
         print("Forecast Summary Loaded for Recommendations.",forecasted_values_df.shape)
         # Create the prompt for Gemini
-        prompt = f"""
-Analyze the following VM instance data and generate infrastructure alerts.
+#         prompt = f"""
+# Analyze the following VM instance data and generate infrastructure alerts.
  
-DATA SUMMARY:
-{data_summary}
+# DATA SUMMARY:
+# {data_summary}
  
-FORECASTED VALUES (next 5 days):
-{forecast_summary}
+# FORECASTED VALUES (next 5 days):
+# {forecast_summary}
 
-TASK: Generate 5-8 VM alerts based on the data above indicating potential issues or optimization opportunities. Do not include any alerts involving shortcomings of data.
+# TASK: Generate 5-8 VM alerts based on the data above indicating potential issues or optimization opportunities. Do not include any alerts involving shortcomings of data.
  
-Examples of alert:
-"title": "High Network Throughput With Low Disk Usage",
-        "vm_instance": "vm-api-10",
-        "impact_level": "High",
-        "category": "Network",
-        "detailed_explanation": (
-            "CPU utilization is moderately high while Disk Read and Write remain low, but "
-            "Network egress is elevated. This indicates a heavy network-bound workload such "
-            "as an API server or data streaming service.\n\n"
-            "Remediation:\n"
-            "1. Optimize network egress using caching or compression.\n"
-            "2. Consider using a regional load balancer to distribute traffic."
-        ),
-"title": "Spike in Disk Reads With Steady CPU",
-        "vm_instance": "vm-db-09",
-        "impact_level": "Low",
-        "category": "Performance",
-        "detailed_explanation": (
-            "A sudden surge in Disk Read Bytes occurred while CPU remained steady, indicating "
-            "a large dataset load or database read operation. This may be expected, but repeated "
-            "spikes can cause IO latency.\n\n"
-            "Remediation:\n"
-            "1. Investigate query patterns and caching strategy.\n"
-            "2. Add read replicas if load patterns increase."
-        ),        
+# Examples of alert:
+# "title": "High Network Throughput With Low Disk Usage",
+#         "vm_instance": "vm-api-10",
+#         "impact_level": "High",
+#         "category": "Network",
+#         "detailed_explanation": (
+#             "CPU utilization is moderately high while Disk Read and Write remain low, but "
+#             "Network egress is elevated. This indicates a heavy network-bound workload such "
+#             "as an API server or data streaming service.\n\n"
+#             "Remediation:\n"
+#             "1. Optimize network egress using caching or compression.\n"
+#             "2. Consider using a regional load balancer to distribute traffic."
+#         ),
+# "title": "Spike in Disk Reads With Steady CPU",
+#         "vm_instance": "vm-db-09",
+#         "impact_level": "Low",
+#         "category": "Performance",
+#         "detailed_explanation": (
+#             "A sudden surge in Disk Read Bytes occurred while CPU remained steady, indicating "
+#             "a large dataset load or database read operation. This may be expected, but repeated "
+#             "spikes can cause IO latency.\n\n"
+#             "Remediation:\n"
+#             "1. Investigate query patterns and caching strategy.\n"
+#             "2. Add read replicas if load patterns increase."
+#         ),        
  
-CRITICAL: You MUST respond with ONLY a valid JSON array. Do not include any explanatory text, markdown, or commentary.
+# CRITICAL: You MUST respond with ONLY a valid JSON array. Do not include any explanatory text, markdown, or commentary.
  
-Required JSON format (respond with ONLY this structure):
-[
-    {{
-        "title": "Short description (5-10 words)",
-        "vm_instance": "instance-id-from-data",
-        "impact_level": "Low|Medium|High",
-        "category": "Performance|Cost|Storage|Network|Reliability|Scaling",
-        "detailed_explanation": "Full explanation with metrics and remediation steps"
-    }}
-]
+# Required JSON format (respond with ONLY this structure):
+# [
+#     {{
+#         "title": "Short description (5-10 words)",
+#         "vm_instance": "instance-id-from-data",
+#         "impact_level": "Low|Medium|High",
+#         "category": "Performance|Cost|Storage|Network|Reliability|Scaling",
+#         "detailed_explanation": "Full explanation with metrics and remediation steps"
+#     }}
+# ]
  
-Use these categories: Performance, Cost, Storage, Network, Reliability, Scaling
-For vm_instance, use actual VM IDs from the data summary if available, otherwise use descriptive names like "vm-high-cpu-01"
-"""
+# Use these categories: Performance, Cost, Storage, Network, Reliability, Scaling
+# For vm_instance, use actual VM IDs from the data summary if available, otherwise use descriptive names like "vm-high-cpu-01"
+# """
        
-        # Initialize Gemini model with JSON mode
-        model = genai.GenerativeModel(
-            'gemini-2.5-flash',
-            generation_config={
-                "response_mime_type": "application/json"
-            }
-        )
+#         # Initialize Gemini model with JSON mode
+#         model = genai.GenerativeModel(
+#             'gemini-2.5-flash',
+#             generation_config={
+#                 "response_mime_type": "application/json"
+#             }
+#         )
        
-        # Generate response
-        response = model.generate_content(prompt)
+#         # Generate response
+#         response = model.generate_content(prompt)
        
-        # Parse the response
-        alerts = parse_gemini_alerts_response(response.text)
-        return alerts
+#         # Parse the response
+#         alerts = parse_gemini_alerts_response(response.text)
+#         return alerts
        
-        data_summary = prepare_data_summary(df, analysis_results)
         
         # Call vm_recommender_agent via ADK Runner, similar to agent_run.py
         async def _call_agent(summary: str) -> str:
@@ -183,7 +183,7 @@ For vm_instance, use actual VM IDs from the data summary if available, otherwise
         agent_response_text = asyncio.run(_call_agent(data_summary))
 
         # Parse the response (expects the JSON structure defined in the agent)
-        result = parse_gemini_response(agent_response_text)
+        result = parse_gemini_alerts_response(agent_response_text)
         
         # Add service information
         result['service'] = 'Compute Engine'

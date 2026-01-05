@@ -41,40 +41,41 @@ def vm_recommendations():
         analysis_results = analyze_vm_data(df)
         output = generate_vm_recommendations(df)
         return JSONResponse(content=output)
+        return {"status": "vm backend running"}
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
-@app.get("/vm/analysis")
-def vm_analysis():
-    """
-    Comprehensive analysis endpoint including:
-    - Descriptive statistics
-    - Correlation analysis
-    - Trend analysis
-    - Cost analysis
-    - Resource utilization insights
-    - Anomaly detection
-    """
-    try:
-        df = load_vm_data()
-        df = preprocess_vm_data(df)
-        analysis_results = analyze_vm_data(df)
-        return JSONResponse(content=analysis_results)
-    except Exception as e:
-        return JSONResponse({"error": str(e)}, status_code=500)
+# @app.get("/vm/analysis")
+# def vm_analysis():
+#     """
+#     Comprehensive analysis endpoint including:
+#     - Descriptive statistics
+#     - Correlation analysis
+#     - Trend analysis
+#     - Cost analysis
+#     - Resource utilization insights
+#     - Anomaly detection
+#     """
+#     try:
+#         df = load_vm_data()
+#         df = preprocess_vm_data(df)
+#         analysis_results = analyze_vm_data(df)
+#         return JSONResponse(content=analysis_results)
+#     except Exception as e:
+#         return JSONResponse({"error": str(e)}, status_code=500)
 
-@app.get("/vm/preprocessed")
-def vm_preprocessed_data(df):
-    """
-    Get preprocessed and aggregated VM data
-    """
-    try:
-        preprocessed = preprocess_vm_data(df)
-        # Convert to dictionary for JSON response
-        result = preprocessed.to_dict(orient='records')
-        return JSONResponse(content=result)
-    except Exception as e:
-        return JSONResponse({"error": str(e)}, status_code=500)
+# @app.get("/vm/preprocessed")
+# def vm_preprocessed_data(df):
+#     """
+#     Get preprocessed and aggregated VM data
+#     """
+#     try:
+#         preprocessed = preprocess_vm_data(df)
+#         # Convert to dictionary for JSON response
+#         result = preprocessed.to_dict(orient='records')
+#         return JSONResponse(content=result)
+#     except Exception as e:
+#         return JSONResponse({"error": str(e)}, status_code=500)
 
 # -----------------------------
 # HEALTH CHECK

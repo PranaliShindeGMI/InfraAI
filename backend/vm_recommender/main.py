@@ -2,7 +2,8 @@
 import os
 import pandas as pd
 from agent import root_agent # Import the agent defined in agent.py
-
+from dotenv import load_dotenv
+import google.genai as genai
 # --- Step 1: (Already covered in Environment Setup) ---
 # Ensure Google Cloud authentication is set up.
 # For example, by running `gcloud auth application-default login`
@@ -71,6 +72,7 @@ agent_input = {"data_summary": data_summary,"forecast_summary": forecast_summary
 # --- Step 3: Call the agent to get a response ---
 print("Calling the VM Recommender Agent...")
 try:
+    genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
     # The run() method returns an object conforming to the output_schema
     # In this case, it will be an instance of RecommendationResponseSchema.
     response_object = root_agent.run(agent_input)
