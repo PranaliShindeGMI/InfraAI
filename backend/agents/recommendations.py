@@ -88,7 +88,13 @@ def generate_vm_recommendations(df):
         forecast_csv_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'VM', 'data', 'forecast', 'vm_forecasts.csv')
         forecasted_values_df = pd.read_csv(forecast_csv_path)
         forecast_summary = forecasted_values_df.to_string()
-        print("Forecast Summary Loaded for Recommendations.",forecasted_values_df.shape)
+        print("Forecast Summary Loaded for Recommendations.", forecasted_values_df.shape)
+
+        # Combine current and forecasted metrics into a single summary
+        combined_summary = (
+            "DATA SUMMARY:\n" + data_summary +
+            "\n\nFORECASTED VALUES (next 5 days):\n" + forecast_summary
+        )
         # Create the prompt for Gemini
 #         prompt = f"""
 # Analyze the following VM instance data and generate infrastructure alerts.
@@ -161,13 +167,16 @@ def generate_vm_recommendations(df):
        
         
         # Call vm_recommender_agent via ADK Runner, similar to agent_run.py
-        async def _call_agent(summary: str) -> str:
+        async def _call_agent(summary: str, forecast: str) -> str:
             session_service = InMemorySessionService()
             await session_service.create_session(
                 app_name="vm_recommender_app",
                 user_id="backend_user",
                 session_id="vm_recommendations_session",
-                state={"data_summary": summary},
+                state={
+                    "data_summary": summary,
+                    "forecast_summary": forecast,
+                },
             )
 
             runner = Runner(
@@ -176,7 +185,11 @@ def generate_vm_recommendations(df):
                 session_service=session_service,
             )
 
-            content = types.Content(role="user", parts=[types.Part(text=summary)])
+            # Pass both pieces of context in the user message text as well
+            content = types.Content(
+                role="user",
+                parts=[types.Part(text=combined_summary)],
+            )
 
             final_text = None
             async for event in runner.run_async(
@@ -195,8 +208,8 @@ def generate_vm_recommendations(df):
 
             return final_text or "{}"
 
-        # Run the async agent call synchronously
-        agent_response_text = asyncio.run(_call_agent(data_summary))
+        # Run the async agent call synchronously with both summaries
+        agent_response_text = asyncio.run(_call_agent(data_summary, forecast_summary))
 
         # Parse the response into a list of alert dictionaries
         alerts = parse_gemini_alerts_response(agent_response_text)
@@ -324,6 +337,8 @@ def parse_gemini_alerts_response(response_text: str) -> list:
                         "detailed_explanation",
                         "No details available.",
                     ),
+                    "cost": alert.get("cost"),
+                    "cost_explanation": alert.get("cost_explanation", ""),
                 })
 
         return validated_alerts if validated_alerts else _get_fallback_alert()

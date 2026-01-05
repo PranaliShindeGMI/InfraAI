@@ -17,7 +17,8 @@ class AlertSchema(BaseModel):
         "Scaling",
     ]
     detailed_explanation: str
-
+    cost: float
+    cost_explanation: str
 
 class RecommendationResponseSchema(BaseModel):
     alerts: List[AlertSchema]
@@ -37,8 +38,8 @@ root_agent = Agent(
 
     ### IMPORTANT: Dataset Composition
     - This dataset contains 5 UNIQUE VM instances being monitored over time
-    - Each instance has MULTIPLE data points collected twice daily (every 12 hours) for 365 days
-    - Total rows in dataset: 5 instances × 2 readings/day × 365 days = 3,650 rows
+    - Each instance has MULTIPLE data points collected once daily (every 24 hours) for 365 days
+    - Total rows in dataset: 5 instances × 1 reading/day × 365 days = 1,825 rows
     - DO NOT interpret the row count as the number of VM instances
     - When analyzing "number of instances," refer to unique VM identifiers, NOT row count
     - Metrics like averages, sums, and patterns should be analyzed PER INSTANCE over time
@@ -128,11 +129,19 @@ root_agent = Agent(
     - Behavioral changes: Sudden shift in usage patterns compared to historical data
 
     ### Recommendation Format Guidelines
-    - Always specify WHICH instance(s) your recommendation applies to
-    - Reference specific metrics and time periods when relevant
-    - Quantify potential savings when suggesting cost optimizations
-    - Prioritize recommendations by potential impact
-    - Consider the small fleet size (5 instances) when suggesting architectural changes
+    - Every alert MUST be scoped to a single VM instance (no fleet-level or combined alerts).
+    - Do NOT aggregate multiple instances into one generic recommendation.
+    - Do NOT reuse the exact same title text across different alerts; tailor the title to the specific instance and issue.
+    - Choose the category that best reflects the PRIMARY issue for that instance:
+        - Use "Cost" when the main issue is waste/oversizing or clear savings.
+        - Use "Performance" for saturation, throttling, or latency concerns.
+        - Use "Storage" for disk I/O, capacity, or throughput issues.
+        - Use "Network" for egress/ingress anomalies or bandwidth constraints.
+        - Use "Reliability" for uptime/availability/instability patterns.
+        - Use "Scaling" for right-sizing, auto-scaling, or capacity planning.
+    - Aim for a mix of categories across all alerts when the data supports it; do not mark every alert as "Cost" if other issues are present.
+    - Reference specific metrics and time periods for THAT instance when relevant.
+    - Prioritize recommendations by potential impact for that instance.
 
         ---
 
@@ -149,15 +158,33 @@ root_agent = Agent(
                 "vm_instance": "instance-id-from-data or descriptive name",
                 "impact_level": "Low" | "Medium" | "High",
                 "category": "Performance" | "Cost" | "Storage" | "Network" | "Reliability" | "Scaling",
-                "detailed_explanation": "Full explanation with metrics and concrete remediation steps"
+                "detailed_explanation": "Full explanation with metrics and concrete remediation steps",
+                "cost": <number>,
+                "cost_explanation": "Explanation of how the cost savings were calculated (ONLY when category is 'Cost'; otherwise set cost to 0 and cost_explanation to an empty string)"
             }
+
+        ADDITIONAL RULES:
+        - For alerts where category = "Cost":
+            - Provide a non-zero numeric "cost" value representing estimated monthly savings.
+            - Provide a detailed "cost_explanation" describing how that estimate was derived.
+        - For alerts where category is NOT "Cost":
+            - Set "cost" to 0.
+            - Set "cost_explanation" to an empty string.
 
         RESPONSE FORMAT (CRITICAL):
         - Respond with ONLY a JSON object of the form:
 
             {
                 "alerts": [
-                    {"title": "...", "vm_instance": "...", "impact_level": "...", "category": "...", "detailed_explanation": "..."},
+                    {
+                        "title": "...",
+                        "vm_instance": "...",
+                        "impact_level": "...",
+                        "category": "...",
+                        "detailed_explanation": "...",
+                        "cost": <number>,
+                        "cost_explanation": "..."
+                    },
                     ...
                 ]
             }
