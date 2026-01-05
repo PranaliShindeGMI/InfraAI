@@ -7,12 +7,27 @@ import pandas as pd
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
+import google.genai as genai
 
 from backend.analysis import analyze_vm_data
 from backend.vm_recommender.agent import root_agent as vm_recommender_agent
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from the local .env (backend/agents/.env)
+_ENV_PATH = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path=_ENV_PATH)
+
+_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+if _API_KEY and hasattr(genai, "configure"):
+    try:
+        genai.configure(api_key=_API_KEY)
+    except Exception as _e:
+        # Non-fatal; request code will surface a clearer error if this fails
+        print(f"Warning: Failed to configure Gemini client: {_e}")
+elif not _API_KEY:
+    print("Warning: GEMINI_API_KEY or GOOGLE_API_KEY not set; LLM calls will fail until configured.")
+else:
+    # Older/newer google.genai versions may not expose configure(); rely on env var.
+    print("Info: google.genai.configure not available; relying on env vars for auth.")
 
 # Load agent context
 CONTEXT_FILE_PATH = os.path.join(os.path.dirname(__file__), 'agent_context.txt')
@@ -32,21 +47,22 @@ def load_agent_context() -> str:
         return "No additional context available."
  
 def generate_vm_recommendations(df):
-    """
-    Generate AI-powered recommendations based on VM data analysis
-    using Google's Gemini model
-   
-    Returns a list of alert objects in the format:
-    [
-        {
-            "title": "Short description",
-            "vm_instance": "instance name",
-            "impact_level": "Low/Medium/High",
-            "category": "Performance/Storage/Cost/etc",
-            "detailed_explanation": "Long description with remediation steps"
-        },
-        ...
-    ]
+    """Generate AI-powered VM alerts based on data analysis.
+
+    This prepares a summary of the VM data, calls the
+    `vm_recommender_agent` via the Google ADK Runner and returns a
+    JSON-serializable list of alert dicts of the form:
+
+        [
+            {
+                "title": "Short description (5-10 words)",
+                "vm_instance": "instance-id-from-data",
+                "impact_level": "Low" | "Medium" | "High",
+                "category": "Performance" | "Cost" | "Storage" | "Network" | "Reliability" | "Scaling",
+                "detailed_explanation": "Full explanation with metrics and remediation steps",
+            },
+            ...
+        ]
     """
    
     # if not GOOGLE_API_KEY:
@@ -182,22 +198,15 @@ def generate_vm_recommendations(df):
         # Run the async agent call synchronously
         agent_response_text = asyncio.run(_call_agent(data_summary))
 
-        # Parse the response (expects the JSON structure defined in the agent)
-        result = parse_gemini_alerts_response(agent_response_text)
-        
-        # Add service information
-        result['service'] = 'Compute Engine'
-        result['model_used'] = 'gemini-2.5-flash'
-        
-        return result
-        
+        # Parse the response into a list of alert dictionaries
+        alerts = parse_gemini_alerts_response(agent_response_text)
+
+        return alerts
+
     except Exception as e:
-        return {
-            "error": f"Failed to generate recommendations: {str(e)}",
-            "service": "Compute Engine",
-            "insights": ["Error occurred during analysis"],
-            "recommendations": ["Please check API key and try again"]
-        }
+        # On error, return a single fallback alert in the expected schema
+        print(f"ERROR: Failed to generate recommendations: {e}")
+        return _get_fallback_alert(error_message=str(e))
 
 
 def prepare_data_summary(df: pd.DataFrame, analysis_results: dict) -> str:
@@ -258,15 +267,23 @@ def prepare_data_summary(df: pd.DataFrame, analysis_results: dict) -> str:
  
  
 def parse_gemini_alerts_response(response_text: str) -> list:
-    """
-    Parse the Gemini API response and extract alert objects
-   
-    Returns a list of alert dictionaries with keys:
-    - title
-    - vm_instance
-    - impact_level
-    - category
-    - detailed_explanation
+    """Parse the Gemini/agent response and normalize to a list of alerts.
+
+    The vm_recommender_agent is configured with RecommendationResponseSchema:
+
+        {"alerts": [
+            {
+                "title": str,
+                "vm_instance": str,
+                "impact_level": "Low"|"Medium"|"High",
+                "category": "Performance"|"Cost"|"Storage"|"Network"|"Reliability"|"Scaling",
+                "detailed_explanation": str,
+            },
+            ...
+        ]}
+
+    We accept either that dict shape or a bare list and always
+    return a list of validated alert dictionaries.
     """
     try:
         # Remove markdown code blocks if present
@@ -283,24 +300,33 @@ def parse_gemini_alerts_response(response_text: str) -> list:
         print(f"DEBUG: Cleaned response text (first 200 chars): {cleaned_text[:200]}")
        
         # Parse JSON
-        alerts = json.loads(cleaned_text)
-       
-        # Validate and ensure correct format
-        if isinstance(alerts, list):
-            validated_alerts = []
-            for alert in alerts:
-                if isinstance(alert, dict):
-                    validated_alerts.append({
-                        'title': alert.get('title', 'Unknown Issue'),
-                        'vm_instance': alert.get('vm_instance', 'N/A'),
-                        'impact_level': alert.get('impact_level', 'Medium'),
-                        'category': alert.get('category', 'Performance'),
-                        'detailed_explanation': alert.get('detailed_explanation', 'No details available.')
-                    })
-            return validated_alerts if validated_alerts else _get_fallback_alert()
+        parsed = json.loads(cleaned_text)
+
+        # Case 1: New-style agent response: dict with "alerts" key
+        if isinstance(parsed, dict) and "alerts" in parsed:
+            alerts_raw = parsed.get("alerts", [])
+        # Case 2: Bare list-style response – already a list of alerts
+        elif isinstance(parsed, list):
+            alerts_raw = parsed
         else:
-            print(f"DEBUG: Response is not a list, it's a {type(alerts)}")
+            print(f"DEBUG: Unexpected parsed type: {type(parsed)}")
             return _get_fallback_alert()
+
+        validated_alerts = []
+        for alert in alerts_raw:
+            if isinstance(alert, dict):
+                validated_alerts.append({
+                    "title": alert.get("title", "Unknown Issue"),
+                    "vm_instance": alert.get("vm_instance", "N/A"),
+                    "impact_level": alert.get("impact_level", "Medium"),
+                    "category": alert.get("category", "Performance"),
+                    "detailed_explanation": alert.get(
+                        "detailed_explanation",
+                        "No details available.",
+                    ),
+                })
+
+        return validated_alerts if validated_alerts else _get_fallback_alert()
            
     except json.JSONDecodeError as e:
         print(f"DEBUG: JSON decode error: {str(e)}")
@@ -311,14 +337,21 @@ def parse_gemini_alerts_response(response_text: str) -> list:
         return _get_fallback_alert()
  
  
-def _get_fallback_alert() -> list:
-    """
-    Return a fallback alert when parsing fails
-    """
-    return [{
-        'title': 'Analysis Completed - Format Issue',
-        'vm_instance': 'N/A',
-        'impact_level': 'Low',
-        'category': 'System',
-        'detailed_explanation': 'Analysis completed but the response format was unexpected. Please review the configuration.\n\nRemediation:\n1. Check the Gemini API response format\n2. Verify the prompt template\n3. Review the error logs'
-    }]
+def _get_fallback_alert(error_message: str | None = None) -> list:
+    """Return a fallback alert list when parsing or generation fails."""
+    detail = (
+        "Analysis completed but the response format was unexpected. "
+        "Please review the Gemini agent configuration and backend logs."
+    )
+    if error_message:
+        detail += f"\n\nError: {error_message}"
+
+    return [
+        {
+            "title": "Analysis Completed - Format Issue",
+            "vm_instance": "N/A",
+            "impact_level": "Low",
+            "category": "System",
+            "detailed_explanation": detail,
+        }
+    ]

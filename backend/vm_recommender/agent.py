@@ -1,12 +1,26 @@
 from google.adk.agents import Agent
 
-# Import Pydantic BaseModel
 from pydantic import BaseModel
-from typing import List
+from typing import List, Literal
+
+
+class AlertSchema(BaseModel):
+    title: str
+    vm_instance: str
+    impact_level: Literal["Low", "Medium", "High"]
+    category: Literal[
+        "Performance",
+        "Cost",
+        "Storage",
+        "Network",
+        "Reliability",
+        "Scaling",
+    ]
+    detailed_explanation: str
+
 
 class RecommendationResponseSchema(BaseModel):
-    insights: List[str]
-    recommendations: List[str]
+    alerts: List[AlertSchema]
 
 root_agent = Agent(
     name="vm_recommender",
@@ -120,18 +134,36 @@ root_agent = Agent(
     - Prioritize recommendations by potential impact
     - Consider the small fleet size (5 instances) when suggesting architectural changes
 
-    ---
+        ---
 
-    Now analyze the following VM instance data and provide actionable insights and recommendations:
+        Now analyze the following VM instance data and generate infrastructure alerts.
 
-    {data_summary}
+        {data_summary}
 
-    Based on the context provided and the data above, please provide:
-    1. Key Insights: 3-5 important observations about the current VM usage patterns
-    2. Recommendations: 3-5 specific, actionable recommendations to optimize cost, performance, or reliability
+        TASK:
+        - Generate 5–8 alerts indicating potential issues or optimization opportunities.
+        - Each alert MUST follow this structure:
 
-    Make sure to reference specific metrics from the data and apply the best practices from the context.
+            {
+                "title": "Short description (5-10 words)",
+                "vm_instance": "instance-id-from-data or descriptive name",
+                "impact_level": "Low" | "Medium" | "High",
+                "category": "Performance" | "Cost" | "Storage" | "Network" | "Reliability" | "Scaling",
+                "detailed_explanation": "Full explanation with metrics and concrete remediation steps"
+            }
+
+        RESPONSE FORMAT (CRITICAL):
+        - Respond with ONLY a JSON object of the form:
+
+            {
+                "alerts": [
+                    {"title": "...", "vm_instance": "...", "impact_level": "...", "category": "...", "detailed_explanation": "..."},
+                    ...
+                ]
+            }
+
+        - Do NOT include any extra commentary, prose, or markdown.
 """,
     output_schema=RecommendationResponseSchema,
-    output_key="recommendations",
+    output_key="alerts",
 )
