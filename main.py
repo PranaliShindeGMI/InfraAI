@@ -10,12 +10,25 @@ st.set_page_config(layout="wide")
 # ------- FETCH REAL DATA FROM BACKEND -------
 BACKEND_URL = "http://localhost:8000/vm/recommendations"
 
+# Specific alert data
+specific_alert = {
+    "title": "VM 5551001: Persistent CPU Underutilization Detected",
+    "vm_instance": "5551001",
+    "impact_level": "High",
+    "category": "Cost",
+    "detailed_explanation": "Instance 5551001 consistently shows very low CPU utilization, averaging around 7.0-7.5% over the forecast period (October 20-24, 2025). This is significantly below the optimal 40-70% range and the <30% underutilization threshold, indicating the instance is heavily oversized for its workload. Right-sizing this VM to a smaller machine type, potentially an E2 series, will lead to substantial cost savings without impacting performance. Consider using a custom machine type to match precise resource needs.",
+    "cost": 6,
+    "cost_explanation": "Current daily cost forecast is ~$0.40. Monthly cost is ~$12.00. Assuming a 50% reduction in cost by right-sizing to a smaller machine type (e.g., E2-small or custom machine type) suitable for consistently low CPU usage, estimated monthly savings are $12.00 * 0.50 = $6.00."
+}
+
 try:
     alerts = requests.get(BACKEND_URL).json()
+    # Add the specific alert to the beginning of the list
+    alerts.insert(0, specific_alert)
     # st.warning("Alerts: Fetched from backend.")
 except:
     # st.warning("Alerts: Using mock data.")
-    alerts = alertMockData.alerts
+    alerts = [specific_alert] + alertMockData.alerts
     
 
 # ------- SEARCH + FILTER -------
@@ -81,19 +94,21 @@ html = """
 
 <div class="mt-4">
 
-  <div class="grid grid-cols-7 font-semibold text-gray-600 text-sm border-b pb-3">
+  <div class="grid grid-cols-8 font-semibold text-gray-600 text-sm border-b pb-3">
     <div class="col-span-3">Alert</div>
     <div>Category</div>
     <div>Impact</div>
     <div>VM</div>
+    <div>Monthly Savings</div>
   </div>
 """
 
 # ------- ROWS -------
 for item in filtered:
+    cost_display = f"${item.get('cost', 0)}" if item.get('cost') else "N/A"
     html += f"""
     <div onclick='openDrawer({json.dumps(item)})'
-         class="grid grid-cols-7 py-5 border-b items-start bg-white rounded-lg row-hover">
+         class="grid grid-cols-8 py-5 border-b items-start bg-white rounded-lg row-hover">
 
         <div class="col-span-3">
             <div class="font-semibold text-[15px] flex items-center gap-2">
@@ -120,6 +135,10 @@ for item in filtered:
             {item['vm_instance']}
         </div>
 
+        <div class="flex items-center">
+            <span class="text-sm font-semibold text-green-600">{cost_display}</span>
+        </div>
+
     </div>
     """
 
@@ -136,6 +155,14 @@ html += """
         <p class="text-gray-700 mt-2 leading-relaxed" id="drawer_details"></p>
     </div>
 
+    <div class="mt-6" id="cost_section" style="display:none;">
+        <h3 class="font-semibold text-gray-800 text-md">Cost Impact</h3>
+        <div class="mt-2 bg-green-50 border border-green-200 rounded-lg p-4">
+            <p class="text-2xl font-bold text-green-600" id="drawer_cost"></p>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed" id="drawer_cost_explanation"></p>
+        </div>
+    </div>
+
     <button onclick="closeDrawer()"
             class="mt-6 bg-gray-200 px-4 py-2 rounded-md text-sm shadow">
         Close
@@ -149,6 +176,15 @@ function openDrawer(data) {
     document.getElementById("drawer_title").innerText = data.title;
     document.getElementById("drawer_desc").innerText = "VM: " + data.vm_instance;
     document.getElementById("drawer_details").innerText = data.detailed_explanation;
+
+    // Show cost section if cost data is available
+    if (data.cost !== undefined && data.cost_explanation) {
+        document.getElementById("cost_section").style.display = "block";
+        document.getElementById("drawer_cost").innerText = "Potential Savings: $" + data.cost + "/month";
+        document.getElementById("drawer_cost_explanation").innerText = data.cost_explanation;
+    } else {
+        document.getElementById("cost_section").style.display = "none";
+    }
 
     document.getElementById("drawer").classList.add("open");
     document.getElementById("overlay").classList.add("active");
